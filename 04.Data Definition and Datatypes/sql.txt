@@ -32,4 +32,7 @@ FOREIGN KEY (category_id) references categories(id);
 -- use gamebar;
 alter table employees 
 modify column middle_name varchar(100);
+----7------
+drop database gamebar
+
 
