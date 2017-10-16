@@ -20,6 +20,7 @@ where e.salary>1000
 
   select e.salary from employees as e
   order by e.salary asc
+  
 -- 4 -------
 
 select*from employees
