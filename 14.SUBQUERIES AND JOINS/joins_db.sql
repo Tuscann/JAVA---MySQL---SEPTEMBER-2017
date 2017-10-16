@@ -1,22 +1,25 @@
-CREATE DATABASE joins_db;
-USE joins_db;
+----- 1 ----  Managers
 
-CREATE TABLE courses(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(20) NOT NULL
-);
+select e.employee_id, concat(first_name, " ", last_name) as `full_name`, d.department_id, d.name
+from employees as e
+right join departments as d on d.manager_id = employee_id order by e.employee_id limit 5;
 
-CREATE TABLE students(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(20) NOT NULL,
-	course_id INT,
-	CONSTRAINT fk_course_id
-	FOREIGN KEY (course_id)
-	REFERENCES courses(id)
-);
+----- 2 ----  Towns and Addresses
 
-INSERT INTO courses(id, name) VALUES (1, 'HTML5'),(2,'CSS3'),
-(3,'JavaScript'),(4,'PHP'),(5,'MySQL');
+select t.town_id, t.name, a.address_text
+from towns as t
+left join addresses as a
+on t.town_id = a.town_id
+where t.name = "San Francisco" or t.name = "Sofia" or t.name = "Carnation"
+order by town_id, address_id;
 
-INSERT INTO students(id, name, course_id) 
-VALUES (1,'Alice',1),(2,'Michael',1),(3,'Caroline',2),(4,'David',5),(5,'Emma',NULL);
+----- 3 -----  Employees Without Managers
+
+select e.employee_id,e.first_name,e.last_name,e.department_id,e.salary from employees as e
+where e.manager_id is null;
+
+----- 4 -------- High Salary
+
+select count(e.employee_id) as `count` from employees as e
+where e.salary >
+(select AVG(salary) as 'average_salary' from employees);
